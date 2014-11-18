@@ -1,0 +1,24 @@
+<div>
+	<div class="row">
+		<img ng-src="{{artwork_url}}" width="200px">
+	</div>
+	<div class="row">
+		<div class="col-md-2">Volume: {{volume}}</div>
+		<div class="col-md-4"><progressbar class="progress-striped" value="progress" type="success">{{progress}}%</progressbar></div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<button type="button" class="btn btn-success col-md-3" ng-click="play()">
+					<span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play
+				</button>
+				<button type="button" class="btn btn-danger col-md-2" ng-click="stop()">Stop
+					<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+				</button>
+				<button class="btn btn-warning col-md-2" ng-click="pause()">Pause
+					<span type="button" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

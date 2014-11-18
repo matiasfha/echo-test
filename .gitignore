@@ -1,4 +1,4 @@
 .tmp
 node_modules
 public/*
-bower_components
+client/app/bower_components

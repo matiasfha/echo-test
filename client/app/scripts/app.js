@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('clientApp', [])
+angular.module('echoApp', ['echoServices','ngResource','ngRoute','echoSoundManager','echoDirectives'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

@@ -9,21 +9,23 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var fs = require('fs');
 var path = require('path');
-//add your api items here - see app.get below
-var sample = require('./api/sample')(io);
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var errorHandler = require('errorhandler');
 
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 //app.set('views', __dirname + '/views');
 //app.set('view engine', 'jshtml');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-//app.use(express.session());
-app.use(app.router);
+
+app.use(logger('dev'));
+app.use(bodyParser());
+app.use(methodOverride());
+app.use(cookieParser('your secret here'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.engine('jshtml', require('jshtml-express'));
@@ -31,22 +33,46 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+  app.use(errorHandler());
 }
 
 app.get('/', function(req, res) {
-    // fs.readFile(__dirname + '/public/index.html', 'utf8', function(err, text){
-    //     res.send(text);
-    // });
-	res.sendFile('/public/index.html')
+    // res.sendFile('/public/index.html')
+    res.sendFile('/client/app/index.html');
 });
 
 app.get('/api/streams',function(req,res){
-	res.sendFile('./streams.json');
-})
+	res.sendFile('/streams.json',{root:'.'});
+});
 
-app.get('/api/sample', sample.get);
+app.get('/api/sound/pause',function(req,res){
+	io.sockets.emit('sound:server:pause',{uid:'02cd816a2b654f59282e2476384488df'});
+	res.json({uid:'02cd816a2b654f59282e2476384488df'});
+});
+/*
+* volume is a int between 0 and 100
+*/
+app.get('/api/sound/volume/:volume',function(req,res){
+	var data = {
+		volume:req.params.volume,
+		uid:'02cd816a2b654f59282e2476384488df'
+	};
+	
+	io.sockets.emit('sound:server:volume',data);
+	res.json(data);
+});
 
+/**
+* progress is a int representing the time of the song in miliseconds
+*/
+app.get('/api/sound/progress/:progress',function(req,res){
+	var data = {
+		progress:req.params.progress,
+		uid:'02cd816a2b654f59282e2476384488df'
+	}
+	io.sockets.emit('sound:server:progress',data);
+	res.json(data);
+});
 
 
 server.listen(app.get('port'), function(){

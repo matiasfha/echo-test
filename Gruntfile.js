@@ -71,7 +71,7 @@ module.exports = function (grunt) {
         },
         connect: {
             options: {
-                port: 9000,
+                port: 9090,
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost'
             },
@@ -276,9 +276,10 @@ module.exports = function (grunt) {
                         src: [
                             '*.{ico,png,txt}',
                             '.htaccess',
-                            'bower_components/**/*',
+                            '../bower_components/**/*',
                             'images/{,*/}*.{gif,webp}',
-                            'styles/fonts/*'
+                            'styles/fonts/*',
+                            'template/**/*'
                         ]
                     },
                     {
@@ -348,12 +349,12 @@ module.exports = function (grunt) {
                 html: ['<%= yeoman.dist %>/*.html']
             }
         },
-        ngmin: {
+        ngAnnotate: {
             dist: {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= yeoman.dist %>/scripts',
+                        cwd: '.tmp/concat/scripts',
                         src: '*.js',
                         dest: '<%= yeoman.dist %>/scripts'
                     }
@@ -364,7 +365,7 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
-                        '<%= yeoman.dist %>/scripts/scripts.js'
+                        '.tmp/scripts/concat/scripts.js'
                     ]
                 }
             }
@@ -403,9 +404,8 @@ module.exports = function (grunt) {
         'concat',
         'copy:dist',
         'cdnify',
-        'ngmin',
+        'ngAnnotate',
         'cssmin',
-        'uglify',
         'rev',
         'usemin'
     ]);
