@@ -4,7 +4,7 @@
 module.exports = function(config) {
   config.set({
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: '.',
 
     // testing framework to use (jasmine/mocha/qunit/...)
     frameworks: ['jasmine'],
@@ -12,7 +12,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'app/bower_components/angular/angular.js',
+      'app/bower_components/socket.io-client/socket.io.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
+      'app/bower_components/angular-resource/angular-resource.js',
+      'app/bower_components/angular-route/angular-route.js',
+      'app/bower_components/ui.bootstrap/src/progressbar/progressbar.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
@@ -42,7 +46,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode

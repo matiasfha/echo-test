@@ -1,13 +1,10 @@
-
+'use strict';
 /**
  * Module dependencies.
  */
 
 var express = require('express');
 var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-var fs = require('fs');
 var path = require('path');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -32,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.set('view engine', 'jshtml');
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
   app.use(errorHandler());
 }
 
@@ -69,16 +66,20 @@ app.get('/api/sound/progress/:progress',function(req,res){
 	var data = {
 		progress:req.params.progress,
 		uid:'02cd816a2b654f59282e2476384488df'
-	}
-	io.sockets.emit('sound:server:progress',data);
+	};
+	io.sockets.emit('sound:server:progress', data);
 	res.json(data);
 });
 
 
-server.listen(app.get('port'), function(){
+var server = app.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
-io.sockets.on('connection', function (socket) {
+var io = require('socket.io').listen(server)
+
+io.sockets.on('connection', function () {
     console.log('connected');
 });
+
+module.exports = app;

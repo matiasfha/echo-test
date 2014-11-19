@@ -37,7 +37,7 @@ module.exports = function (grunt) {
                 tasks: ['coffee:dist']
             },
             coffeeTest: {
-                files: ['test/spec/{,*/}*.coffee'],
+                files: ['<%= yeoman.app %>/test/spec/{,*/}*.coffee'],
                 tasks: ['coffee:test']
             },
             styles: {
@@ -166,7 +166,7 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'test/spec',
+                        cwd: '<%= yeoman.app %>/test/spec',
                         src: '{,*/}*.coffee',
                         dest: '.tmp/spec',
                         ext: '.js'
@@ -340,7 +340,7 @@ module.exports = function (grunt) {
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js',
+                configFile: 'client/karma.conf.js',
                 singleRun: true
             }
         },
@@ -362,10 +362,15 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
+            options:{
+                mangle:false,
+                compress:true,
+                sourceMap:true
+            },
             dist: {
-                files: {
+               files: {
                     '<%= yeoman.dist %>/scripts/scripts.js': [
-                        '.tmp/scripts/concat/scripts.js'
+                        '<%= yeoman.dist %>/scripts/scripts.js'
                     ]
                 }
             }
@@ -405,6 +410,7 @@ module.exports = function (grunt) {
         'copy:dist',
         'cdnify',
         'ngAnnotate',
+        'uglify',
         'cssmin',
         'rev',
         'usemin'
