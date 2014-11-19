@@ -7,7 +7,7 @@ module.exports = function(config) {
     basePath: '.',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai', 'sinon', 'sinon-chai'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -16,15 +16,30 @@ module.exports = function(config) {
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/bower_components/angular-resource/angular-resource.js',
       'app/bower_components/angular-route/angular-route.js',
+      'app/bower_components/angular-sanitize/angular-sanitize.js',
       'app/bower_components/ui.bootstrap/src/progressbar/progressbar.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
+      'test/lib/specHelper.js',
+      'test/lib/mockData.js',
+      'test/lib/socketMock.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude
     exclude: [],
+
+    preprocessors: {
+        'app/**/*.js': ['coverage']
+    },
+    coverageReporter:{
+      type:'html',
+      dir:'coverage/'
+    },
+    reporters:['progress'],
+
+    colors:true,
 
     // web server port
     port: 8080,
@@ -35,7 +50,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:

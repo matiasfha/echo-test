@@ -2,7 +2,7 @@
 (function(){
 
 
-    var module = angular.module('echoServices',[]);
+    var module = angular.module('echoServices',['ngResource']);
 
     module.factory('Stream', function($resource){
     	return $resource('api/streams/:uid', {uid: '@uid'},{'query':{method:'GET',isArray:false}});
@@ -28,7 +28,8 @@
                             }
                         });
                     });
-                }
+                },
+                socket:socket
             };
       });
 
@@ -36,6 +37,7 @@
         return {
             listen:function(){
                 Socket.on('sound:server:pause',function(data){
+                    console.log('Sound!!')
                     $rootScope.$emit('sound:server:pause',{uid:data.uid});
                 });
                 Socket.on('sound:server:volume',function(data){
