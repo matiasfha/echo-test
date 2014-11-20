@@ -1,5 +1,11 @@
 # Echo Test
 
+This is an application (demo) writteng in AngularJS - NodeJS - Socket.io
+
+With this you can play a music file in the browser (any browser).
+
+The data comes from the file streams.json
+
 ##Global Requirements.
 
 	$ npm install -g foreman bower grunt-cli nodemon
